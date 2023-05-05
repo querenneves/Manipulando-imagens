@@ -39,7 +39,7 @@ const events = {
         this.style.cursor = 'crosshair'
     },
     mousedown(){
-      const {clientX, clientY, offsetX, offsetY} = event
+      const {clientX, clientY, offsetX, offsetY} = events
       startX = clientX 
       startY = clientY
       relativeStarX = offsetX
@@ -49,8 +49,8 @@ const events = {
 
     },
     mousemove(){
-        endX = event.clientX
-        endY = event.clientY
+        endX = events.clientX
+        endY = events.clientY
 
 
     if (startSelection) {
@@ -66,8 +66,8 @@ const events = {
     mouseup(){
         startSelection = false;
 
-        relativeEndX = event.layerX;
-        relativeEndY = event.layerY;
+        relativeEndX = events.layerX;
+        relativeEndY = events.layerY;
     
 
         // mostrar o botão de corte
@@ -85,7 +85,7 @@ photoPreview.addEventListener(eventName, events[eventName])
 // Canvas 
 
 let canvas = document.createElement('canvas')
-let ctx = canvas.getClient('2d')
+let ctx = canvas.getContext('2d')
 
     function onLoadImage(){
     const { width, height } = image
