@@ -3,15 +3,16 @@ const photoFile = document.getElementById('photo-file')
 let photoPreview = document.getElementById('photo-preview')
 let image;
 let photoName;
-//Select & Preview image 
 
+//Select & Preview image 
 document.getElementById('select-image')
 .onclick = function () {
+    photoFile.click()
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () =>{
  photoFile.addEventListener('change', () => {
- let file = photoFile.file.item(0)
+ let file = photoFile.files.item(0)
  photoName = file.name;
 
  //ler um arquivo
@@ -30,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
 const selection = document.getElementById('selection-tool')
 
 let startX, startY, relativeStarX, relativeStarY,
-andX, andY, relativeEndX, relativeEndY;
+endX, endY, relativeEndX, relativeEndY;
 let startSelection = false;
 
 const events = {
@@ -88,11 +89,10 @@ let ctx = canvas.getClient('2d')
 
     function onLoadImage(){
     const { width, height } = image
-    canvas.width = image.width;
-    canvas.height = image.height;
+    canvas.width = width;
+    canvas.height = height;
 
     //limpar o contexto
-
     ctx.clearRect(0, 0, width, height)
 
     //desenhar imagem no contexto
@@ -107,7 +107,7 @@ cropButton.onclick = () => {
     const { width: imgW, height: imgH} = image
     const { width: previewW, height: previewH} = photoPreview
     
-    const [heightFactor, widthFactor] = [
+    const [ widthFactor, heightFactor ] = [
         +(imgW / previewW), 
         +(imgH / previewH)
     ]
@@ -123,12 +123,11 @@ cropButton.onclick = () => {
     ]
 
     const [actualX, actualY] = [
-        + ( relativeStarX * widthFactor),
-        + ( relativeStarY * heightFactor)
+        + ( relativeStarX * widthFactor ),
+        + ( relativeStarY * heightFactor )
     ]
 
     //pegar do ctx (Contexto do Canvas) a imagem cortada
-
     const croppedImage = ctx.getImageData(actualX, actualY, croppeWidth, croppeHeight)
 
     // limpar ctx (Contexto do Canvas)
@@ -142,7 +141,7 @@ cropButton.onclick = () => {
     ctx.putImageData(croppedImage, 0, 0)
 
     //esconder a ferramenta de seleção
-    selection.style.display = 'none';
+    selection.style.display = 'none'
 
     //atualizar o preview da imagem 
     photoPreview.src = canvas.toDataURL()
@@ -153,7 +152,7 @@ cropButton.onclick = () => {
 
   //Download 
   const downloadButton = document.getElementById('download')
-  downloadButton.onclick = function(){
+  downloadButton.onclick = function() {
     const a = document.createElement('a')
     a.download = photoName + '-cropped.png';
     a.href = canvas.toDataURL();

@@ -129,6 +129,6 @@ img {
 
 }
 
-#crop-image, #download {
-    display: none;
+#crop-image {
+    display: no;
 }
